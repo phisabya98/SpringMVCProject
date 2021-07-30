@@ -37,7 +37,8 @@
 				</li>
 			</ul>
 		</nav>
-
+		  <div sec:authorize="isAuthenticated()">
+      		Authenticated as <span sec:authentication="name"></span></div>
 		<!-- <div class="alert alert-success" *ngIf='message'>{{message}}</div> -->
 
 		<div class="container">

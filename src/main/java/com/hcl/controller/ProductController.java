@@ -5,6 +5,7 @@ import java.util.List;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -15,21 +16,34 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.hcl.config.IAuthenticationFacade;
 import com.hcl.model.Product;
 import com.hcl.service.ProductService;
 
 @Controller
 public class ProductController {
 	@Autowired
-	ProductService productService;
+	private ProductService productService;
+	@Autowired
+	private IAuthenticationFacade authenticationFacade;
+	@RequestMapping(value = "/username", method = RequestMethod.GET)
+    @ResponseBody
+    public String currentUserName(Authentication authentication) {
+        return authentication.getName();
+    }
 	
 	@GetMapping("/display")
 	public String generatePage(Model model) {
+		Authentication authentication = authenticationFacade.getAuthentication();
 		model.addAttribute("productList",productService.getAllProducts());
+		model.addAttribute(authentication);
 		Iterator<Product> it = productService.getAllProducts().iterator();
 		while(it.hasNext()) {
 			System.out.println(it.next());
