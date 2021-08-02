@@ -27,17 +27,18 @@
 					class="nav-link">Products</a></li>
 			</ul>
 			<ul class="nav navbar-nav ml-auto" style="margin-right: 40px;">
-				<li class="nav-item">
+				<li class="nav-item" th:if="${loggedIn}">
 				<a href="/logout" class="nav-link"><span class="fas fa-user" style="color: white;">Logout</span></a>
 				
 				</li>
-				<li class="nav-item">
+				<li class="nav-item" th:if="${!loggedIn}">
 		
 				<a href="/login" class="nav-link"><span class="fas fa-sign-in-alt" style="color: white;">Login</span></a>
 				</li>
 			</ul>
 		</nav>
-		  <div sec:authorize="isAuthenticated()">
+		  <div sec:authorize="isAuthenticated()" style="margin-left: 1160px; margin-top: 30px;">
+		  
       		Authenticated as <span sec:authentication="name"></span></div>
 		<!-- <div class="alert alert-success" *ngIf='message'>{{message}}</div> -->
 

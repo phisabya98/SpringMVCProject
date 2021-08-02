@@ -42,6 +42,10 @@ public class ProductController {
 	@GetMapping("/display")
 	public String generatePage(Model model) {
 		Authentication authentication = authenticationFacade.getAuthentication();
+		boolean loggedIn = authentication.isAuthenticated();
+		String role = authentication.getAuthorities().toString().replace("[", "").replace("]", "");
+		model.addAttribute("role", role);
+		model.addAttribute("loggedIn", loggedIn);
 		model.addAttribute("productList",productService.getAllProducts());
 		model.addAttribute(authentication);
 		Iterator<Product> it = productService.getAllProducts().iterator();
