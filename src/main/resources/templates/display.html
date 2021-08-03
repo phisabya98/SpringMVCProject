@@ -45,7 +45,7 @@
 		<div class="container">
 			<h3 style="margin-top: 30px;"class="text-center">List of Products</h3>
 			<hr>
-			<div class="container text-left" >
+			<div class="container text-left" th:if="${!user}">
 
 				<a href="/add" class="btn btn-info">Add
 					New Product</a>
@@ -56,9 +56,10 @@
 					<tr>
 						<th>ID</th>
 						<th>Name</th>
-						<th>PRICE</th>
-						<th>QUANTITY</th>
-						<th th:if="${!user}">TOTAL</th>
+						<th>Brand</th>
+						<th>Price</th>
+						<th>Quantity</th>
+						<th th:if="${user}" >TOTAL</th>
 						<th th:if="${!user}">ACTIONS</th>
 					</tr>
 				</thead>
@@ -67,12 +68,23 @@
 						<tr th:each="product: ${productList}">
 							<td th:text="${product.id}"></td>
 							<td th:text="${product.name}"></td>
+							<td th:text="${product.brand}"></td>
 							<td th:text="${product.price}"></td>
 							<td th:text="${product.quantity}"></td>		
-							<td th:text="${product.total}"></td>						
-							<td> <a th:href="@{/product/update/{id}(id=${product.id})}" class="btn btn-primary ">Update</a>
-					    		 <a th:href="@{/product/delete/{id}(id=${product.id})}" class="btn btn-danger ">Delete</a>
+							<td th:if="${user}" th:text="${product.total}"></td>						
+							<td > <a th:href="@{/product/update/{id}(id=${product.id})}" class="btn btn-primary ">Update</a>
+					    		 <a th:if="${!user}" th:href="@{/product/delete/{id}(id=${product.id})}" class="btn btn-danger ">Delete</a>
 							</td>
+						</tr>
+						<tr th:if="${user}" >
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td>Total: </td>
+						<td th:text="${totaled}"}></td>
+						<td></td>
+						
 						</tr>
 
 				</tbody>

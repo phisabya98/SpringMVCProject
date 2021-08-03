@@ -34,6 +34,7 @@ public class ProductService {
 	public Product updateProduct(long id, Product product)throws Exception {
 		Product p1= getProductById(id);
 		p1.setName(product.getName());
+		p1.setBrand(product.getBrand());
 		repo.save(p1);
 		return p1;
 	}

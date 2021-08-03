@@ -22,6 +22,8 @@ public class Product {
 	private Long id;
 	@Column (name="prdName")
 	private String name;
+	@Column (name="prdBrand")
+	private String brand;
 	@Column (name="prdPrice")
 	private Double price;
 	@Column(name="qty")
@@ -57,6 +59,13 @@ public class Product {
 	}
 	public void setTotal(Double total) {
 		this.total = total;
+	}
+
+	public String getBrand() {
+		return brand;
+	}
+	public void setBrand(String brand) {
+		this.brand = brand;
 	}
 	@Override
 	public String toString() {

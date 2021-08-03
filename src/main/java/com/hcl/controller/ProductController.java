@@ -1,5 +1,6 @@
 package com.hcl.controller;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -52,9 +53,12 @@ public class ProductController {
 		model.addAttribute("productList",productService.getAllProducts());
 		model.addAttribute(authentication);
 		Iterator<Product> it = productService.getAllProducts().iterator();
+		double totaled = 0;
 		while(it.hasNext()) {
-			System.out.println(it.next());
+			totaled += it.next().getTotal();
 		}
+		model.addAttribute("totaled", totaled);
+		
 		return "display";
 	}
 	@GetMapping("/add")
@@ -90,6 +94,10 @@ public class ProductController {
 
 	@GetMapping("/product/update/{id}")
 	public String updateProduct(@PathVariable(value = "id") Long id, Model model) throws Exception {
+		Authentication authentication = authenticationFacade.getAuthentication();
+		boolean user = authentication.getAuthorities().toString().equalsIgnoreCase("[role_user]");
+		System.out.println(user);
+		model.addAttribute("user", user);
 		Product p1 = productService.getProductById(id);
 		model.addAttribute("product", p1);
 		return "update_product";
