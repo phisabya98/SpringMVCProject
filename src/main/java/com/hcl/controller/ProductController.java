@@ -43,7 +43,10 @@ public class ProductController {
 	public String generatePage(Model model) {
 		Authentication authentication = authenticationFacade.getAuthentication();
 		boolean loggedIn = authentication.isAuthenticated();
-		String role = authentication.getAuthorities().toString().replace("[", "").replace("]", "");
+		String role = authentication.getAuthorities().toString();
+		boolean user = authentication.getAuthorities().toString().equalsIgnoreCase("[role_user]");
+		System.out.println(user);
+		model.addAttribute("user", user);
 		model.addAttribute("role", role);
 		model.addAttribute("loggedIn", loggedIn);
 		model.addAttribute("productList",productService.getAllProducts());
